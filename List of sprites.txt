@@ -1,0 +1,102 @@
+player	- player
+exit	- exit from level
+fog		- fog
+car1	- car facing up
+car2	- car facing right
+car3	- car facing down
+car4	- car facing left
+t		- tree
+f		- forest
+g1		- grass type 1
+g2		- grass type 2
+cr		- city road
+crx 	- city road with horizontal lines
+cry 	- city road with vertical lines
+shop15	- city shop in city house 1x5
+shop22	- city shop in city house 2x2
+shop25	- city shop in city house 2x5
+ch151	- city house 1x5 1 part type 1
+ch152	- city house 1x5 2 part type 1
+ch153	- city house 1x5 3 part type 1
+ch154	- city house 1x5 4 part type 1
+ch155	- city house 1x5 5 part type 1
+ch156	- city house 1x5 1 part type 2
+ch157	- city house 1x5 2 part type 2
+ch158	- city house 1x5 3 part type 2
+ch159	- city house 1x5 4 part type 2
+ch1510	- city house 1x5 5 part type 2
+ch151r	- city house 1x5 1 part rotated
+ch152r	- city house 1x5 2 part rotated
+ch153r	- city house 1x5 3 part rotated
+ch154r	- city house 1x5 4 part rotated
+ch155r	- city house 1x5 5 part rotated
+ch221	- city house 2x2 1 part
+ch222	- city house 2x2 2 part
+ch223	- city house 2x2 3 part
+ch224	- city house 2x2 4 part
+ch251	- city house 2x5 1 part
+ch252	- city house 2x5 2 part
+ch253	- city house 2x5 3 part
+ch254	- city house 2x5 4 part
+ch255	- city house 2x5 5 part
+ch256	- city house 2x5 6 part
+ch257	- city house 2x5 7 part
+ch258	- city house 2x5 8 part
+ch259	- city house 2x5 9 part
+ch2510	- city house 2x5 10 part
+ch251s	- city house 2x5 1 part with shop
+ch252s	- city house 2x5 2 part with shop
+ch253s	- city house 2x5 3 part with shop
+ch254s	- city house 2x5 4 part with shop
+ch255s	- city house 2x5 5 part with shop
+ch256s	- city house 2x5 6 part with shop
+ch257s	- city house 2x5 7 part with shop
+ch258s	- city house 2x5 8 part with shop
+ch259s	- city house 2x5 9 part with shop
+ch2510s	- city house 2x5 10 part with shop
+ch251r	- city house 2x5 1 part rotated
+ch252r	- city house 2x5 2 part rotated
+ch253r	- city house 2x5 3 part rotated
+ch254r	- city house 2x5 4 part rotated
+ch255r	- city house 2x5 5 part rotated
+ch256r	- city house 2x5 6 part rotated
+ch257r	- city house 2x5 7 part rotated
+ch258r	- city house 2x5 8 part rotated
+ch259r	- city house 2x5 9 part rotated
+ch2510r	- city house 2x5 10 part rotated
+ch331	- city house 3x3 1 part
+ch332	- city house 3x3 2 part
+ch333	- city house 3x3 3 part
+ch334	- city house 3x3 4 part
+ch335	- city house 3x3 5 part
+ch336	- city house 3x3 6 part
+ch337	- city house 3x3 7 part
+ch338	- city house 3x3 8 part
+ch339	- city house 3x3 9 part
+ch351	- city house 3x5 1 part
+ch352	- city house 3x5 2 part
+ch353	- city house 3x5 3 part
+ch354	- city house 3x5 4 part
+ch355	- city house 3x5 5 part
+ch356	- city house 3x5 6 part
+ch357	- city house 3x5 7 part
+ch358	- city house 3x5 8 part
+ch359	- city house 3x5 9 part
+ch3510	- city house 3x5 10 part
+ch3511	- city house 3x5 11 part
+ch3512	- city house 3x5 12 part
+ch3513	- city house 3x5 13 part
+ch3514	- city house 3x5 14 part
+ch3515	- city house 3x5 15 part
+fh1		- forest house 2x2 1 part
+fh2		- forest house 2x2 2 part
+fh3		- forest house 2x2 3 part
+fh4		- forest house 2x2 4 part
+pr13	- plains road from top to bottom
+pr24	- plains road from left to right
+pr12	- plains road from top to right
+pr23	- plains road from right to bottom
+pr34	- plains road from bottom to left
+pr41	- plains road from left to top
+pr234	- plains road from right to bottom and left
+pr134	- plains road from top to down and left

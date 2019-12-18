@@ -1,0 +1,32 @@
+A:\Программирование\C#\GameQuest\GameQuest\obj\Debug\GameQuest.csprojAssemblyReference.cache
+A:\Программирование\C#\GameQuest\GameQuest\obj\Debug\GameQuest.csproj.GenerateResource.cache
+A:\Программирование\C#\GameQuest\GameQuest\obj\Debug\GameQuest.Form1.resources
+H:\GameQuest\GameQuest\obj\Debug\GameQuest.csprojAssemblyReference.cache
+H:\GameQuest\GameQuest\obj\Debug\GameQuest.csproj.GenerateResource.cache
+H:\GameQuest\GameQuest\obj\Debug\GameQuest.csproj.CoreCompileInputs.cache
+H:\GameQuest\GameQuest\obj\Debug\GameQuest.InventoryForm.resources
+A:\Программирование\C#\GameQuest\GameQuest\obj\Debug\GameQuest.InventoryForm.resources
+H:\Рабочий стол\GameQuest\GameQuest\bin\Debug\1пр - алгоритм флойда.exe.config
+H:\Рабочий стол\GameQuest\GameQuest\bin\Debug\1пр - алгоритм флойда.exe
+H:\Рабочий стол\GameQuest\GameQuest\bin\Debug\1пр - алгоритм флойда.pdb
+H:\Рабочий стол\GameQuest\GameQuest\obj\Debug\GameQuest.csprojAssemblyReference.cache
+H:\Рабочий стол\GameQuest\GameQuest\obj\Debug\GameQuest.Form1.resources
+H:\Рабочий стол\GameQuest\GameQuest\obj\Debug\GameQuest.InventoryForm.resources
+H:\Рабочий стол\GameQuest\GameQuest\obj\Debug\_1пр___алгоритм_флойда.Properties.Resources.resources
+H:\Рабочий стол\GameQuest\GameQuest\obj\Debug\GameQuest.csproj.GenerateResource.cache
+H:\Рабочий стол\GameQuest\GameQuest\obj\Debug\GameQuest.csproj.CoreCompileInputs.cache
+H:\Рабочий стол\GameQuest\GameQuest\obj\Debug\1пр - алгоритм флойда.exe
+H:\Рабочий стол\GameQuest\GameQuest\obj\Debug\1пр - алгоритм флойда.pdb
+A:\Программирование\C#\GameQuest\GameQuest\bin\Debug\GameQuest.exe.config
+A:\Программирование\C#\GameQuest\GameQuest\bin\Debug\GameQuest.exe
+A:\Программирование\C#\GameQuest\GameQuest\bin\Debug\GameQuest.pdb
+A:\Программирование\C#\GameQuest\GameQuest\obj\Debug\GameQuest.Properties.Resources.resources
+A:\Программирование\C#\GameQuest\GameQuest\obj\Debug\GameQuest.exe
+A:\Программирование\C#\GameQuest\GameQuest\obj\Debug\GameQuest.pdb
+H:\GameQuest\GameQuest\bin\Debug\GameQuest.exe.config
+H:\GameQuest\GameQuest\bin\Debug\GameQuest.exe
+H:\GameQuest\GameQuest\bin\Debug\GameQuest.pdb
+H:\GameQuest\GameQuest\obj\Debug\GameQuest.Game.resources
+H:\GameQuest\GameQuest\obj\Debug\GameQuest.Properties.Resources.resources
+H:\GameQuest\GameQuest\obj\Debug\GameQuest.exe
+H:\GameQuest\GameQuest\obj\Debug\GameQuest.pdb

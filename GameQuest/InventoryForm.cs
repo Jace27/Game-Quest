@@ -15,7 +15,10 @@ namespace GameQuest
         public InventoryForm(Player player)
         {
             InitializeComponent();
-            
+
+            Icon = new Icon(TitleScreen.IconPath);
+
+
             label1.Text = "Монет: " + player.Inventory.Money;
             for (int i = 0; i < player.Inventory.Items.Length; i++)
             {

@@ -63,7 +63,7 @@
             this.listView1.HideSelection = false;
             this.listView1.Location = new System.Drawing.Point(12, 50);
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(240, 100);
+            this.listView1.Size = new System.Drawing.Size(360, 100);
             this.listView1.TabIndex = 3;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
@@ -76,26 +76,27 @@
             // columnHeader2
             // 
             this.columnHeader2.Text = "Предмет";
-            this.columnHeader2.Width = 70;
+            this.columnHeader2.Width = 110;
             // 
             // columnHeader3
             // 
             this.columnHeader3.Text = "Описание";
-            this.columnHeader3.Width = 120;
+            this.columnHeader3.Width = 196;
             // 
             // InventoryForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(265, 159);
+            this.ClientSize = new System.Drawing.Size(384, 159);
             this.Controls.Add(this.listView1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "InventoryForm";
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "InventoryForm";
+            this.Text = "Инвентарь";
             this.ResumeLayout(false);
             this.PerformLayout();
 

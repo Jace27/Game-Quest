@@ -16,13 +16,16 @@ namespace GameQuest
             richTextBox1.Focus();
             for (int i = 0; i < Notes.Length; i++)
             {
-                richTextBox1.Text += Notes[i][0];
+                string author = Notes[i][0];
+                if (author == "{player}") author = PlayerNick;
+                richTextBox1.Text += author;
                 richTextBox1.Text += ": " + Notes[i][1];
                 richTextBox1.Text += "\n";
             }
             PaintAuthors();
         }
 
+        public static string PlayerNick;
         public static string[][] Notes = new string[0][];
         public static void NoteAdd(string Speaker, string Message)
         {
@@ -79,13 +82,28 @@ namespace GameQuest
                         Array.Resize<string>(ref Authors, Authors.Length + 1);
                         Authors[Authors.Length - 1] = str;
                         Array.Resize<Color>(ref Colors, Colors.Length + 1);
-                        Random Random = new Random();
-                        int R = Random.Next(0, 256);
-                        Thread.Sleep(10);
-                        int G = Random.Next(0, 256);
-                        Thread.Sleep(10);
-                        int B = Random.Next(0, 256);
-                        Colors[Colors.Length - 1] = Color.FromArgb(R, G, B);
+                        if (str == "Фиолетовая Ведьма")
+                        {
+                            Colors[Colors.Length - 1] = Color.FromArgb(113, 9, 170);
+                        }
+                        else if (str == "Зеленая Ведьма")
+                        {
+                            Colors[Colors.Length - 1] = Color.FromArgb(26, 153, 26);
+                        }
+                        else if (str == "Красная Ведьма")
+                        {
+                            Colors[Colors.Length - 1] = Color.FromArgb(166, 0, 0);
+                        }
+                        else
+                        {
+                            Random Random = new Random();
+                            int R = Random.Next(0, 256);
+                            Thread.Sleep(10);
+                            int G = Random.Next(0, 256);
+                            Thread.Sleep(10);
+                            int B = Random.Next(0, 256);
+                            Colors[Colors.Length - 1] = Color.FromArgb(R, G, B);
+                        }
                     }
 
                     int pos2 = str.Length;

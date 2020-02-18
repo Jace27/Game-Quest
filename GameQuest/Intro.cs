@@ -45,6 +45,8 @@ namespace GameQuest
             if (CurrentPhrase != "")
             {
                 gr2.FillRectangle(Brushes.White, new Rectangle(Width - 300, 0, 300, 150));
+                gr2.DrawRectangle(Pens.Black, Width - 301, 0, 300, 150);
+                gr2.DrawRectangle(Pens.Black, 0, 0, Width - 1, Height - 1);
                 gr2.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
                 TextRenderer.DrawText(gr2, CurrentPhrase, new Font("Segoe Script", 12f), new Rectangle(Width - 300, 0, 300, 150), Color.Black, Flags);
             }
@@ -83,7 +85,7 @@ namespace GameQuest
                 Scope = new Rectangle(x, y, 450, 300);
                 Draw();
                 await Task.Run(() => { Thread.Sleep(20); });
-                x -= 8;
+                x -= 6;
             }
 
             CurrentPhrase = "Однажды мне понадобилось найти в подсобке несколько вещей";
@@ -107,7 +109,7 @@ namespace GameQuest
             Task task = Task.Run(() =>
             {
                 CurrentPhrase = "И среди старых дискет мне попалась одна с надписью \"Секретно\". Я не удержался и взял эту дискету";
-                Thread.Sleep(600);
+                Thread.Sleep(6000);
                 CurrentPhrase = "На ней оказалась записана карта сокровищ. Интересно, куда она меня приведет?";
                 Draw();
                 Thread.Sleep(3000);

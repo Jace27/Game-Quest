@@ -279,6 +279,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "IT-Квест";
             this.Activated += new System.EventHandler(this.Game_Activated);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Game_FormClosing);
             this.Load += new System.EventHandler(this.Game_Load);
             this.Click += new System.EventHandler(this.Game_Click);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.Form1_Paint);

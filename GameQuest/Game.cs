@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using NAudio.Wave;
+using System.IO.Compression;
 
 namespace GameQuest
 {
@@ -116,24 +117,24 @@ namespace GameQuest
             if (location == "City")
             {
                 Player.Sprite = new Bitmap(Environment.CurrentDirectory + "\\Resources\\Sprites\\car2.png");
-                Player.Location = new InGameLocation(new Point(4, 9), GameField.BlockSize); //для города
+                Player.Location = new InGameLocation(new Point(4, 9)); //для города
                 Player.Rotation = 3;
             }
             if (location == "Forest")
             {
-                Player.Location = new InGameLocation(new Point(0, 2), GameField.BlockSize);     //для леса
+                Player.Location = new InGameLocation(new Point(0, 2));     //для леса
             }
             if (location == "Plains")
             {
-                Player.Location = new InGameLocation(new Point(3, 0), GameField.BlockSize);     //Для равнины
+                Player.Location = new InGameLocation(new Point(3, 0));     //Для равнины
             }
             if (location == "Mountain")
             {
-                Player.Location = new InGameLocation(new Point(0, 0), GameField.BlockSize);     //Для подножия гор
+                Player.Location = new InGameLocation(new Point(0, 0));     //Для подножия гор
             }
             if (location == "Dungeon")
             {
-                Player.Location = new InGameLocation(new Point(0, 17), GameField.BlockSize);    //Для подземелья
+                Player.Location = new InGameLocation(new Point(0, 17));    //Для подземелья
             }
 
             Dialog = new Dialog(this);
@@ -347,7 +348,7 @@ namespace GameQuest
         private async void PlainsQuestStart()
         {
             isInQuest = true;
-            cr = new Crossword();
+            cr = new Crossword(Player);
             cr.Show();
 
             await Task.Run(() => { while (!NextMap3) Thread.Sleep(1000); });
@@ -408,7 +409,7 @@ namespace GameQuest
                 Thread.Sleep(1000);
                 Phrase(17);
             }
-            else if (!F1Shop || !F2Shop || !F3Shop || !F4Shop)
+            else if (GameField.Location == "City" && !F1Shop || !F2Shop || !F3Shop || !F4Shop)
             {
                 Phrase(16);
             }
@@ -492,7 +493,7 @@ namespace GameQuest
             button1.Location = new Point(1, GameField.BlockSize.Height * 20 - 31);
             button1.Width = GameField.BlockSize.Width * 5 - 2;
             CreateGraphics().Clear(SystemColors.Control);
-            Player.Location = new InGameLocation(new Point(Player.Location.BL.X, Player.Location.BL.Y), GameField.BlockSize);
+            Player.Location = new InGameLocation(new Point(Player.Location.BL.X, Player.Location.BL.Y));
             GameField.Graphics = CreateGraphics();
             GameField.Draw();
         }
@@ -792,17 +793,28 @@ namespace GameQuest
                 GameStart();
         }
 
-        private async void SwitchMusic(int id)
+        private void SwitchMusic(int id)
         {
-            while(TitleScreen.curAudioFile.Volume != 0)
-            {
-                TitleScreen.curAudioFile.Volume--;
-                await Task.Run(() => { Thread.Sleep(50); });
-            }
+            float vol = TitleScreen.curAudioFile.Volume;
             TitleScreen.outputDevice.Stop();
+            FileInfo fi1 = new FileInfo(TitleScreen.audioFiles[id]);
+            if (!fi1.Exists)
+            {
+                string zipPath = Environment.CurrentDirectory + "\\Resources\\Music.zip";
+                string extractPath = Environment.CurrentDirectory + "\\Resources";
+                FileInfo[] fi;
+                DirectoryInfo di = new DirectoryInfo(Environment.CurrentDirectory + "\\Resources");
+                fi = di.GetFiles("*.mp3");
+                for (int i = 0; i < fi.Length; i++)
+                {
+                    try { fi[i].Delete(); } catch { }
+                }
+                try { ZipFile.ExtractToDirectory(zipPath, extractPath); } catch { }
+            }
             TitleScreen.curAudioFile = new AudioFileReader(TitleScreen.audioFiles[id]);
             TitleScreen.outputDevice.Init(TitleScreen.curAudioFile);
             TitleScreen.outputDevice.Play();
+            TitleScreen.curAudioFile.Volume = vol;
         }
 
         #region ДИАЛОГИ
@@ -814,7 +826,7 @@ namespace GameQuest
                 Delegate += Phrase;
                 DrawDelegate += GameField.Draw;
                 PlayerDelegate += SetPlayer;
-                for (int i = 0; i < Dialogs.Length; i++) if (Dialogs[i][1] == "") Dialogs[i][1] = PlayerNick;
+                for (int i = 0; i < Dialogs.Length; i++) if (Dialogs[i][1] == "") Dialogs[i][1] = "{player}";
                 isInDialog = true;
                 SwitchMusic(1);
                 CurrentPhrase = 0;
@@ -887,6 +899,14 @@ namespace GameQuest
                 Phrase(27);
             }
             else if (CurrentPhrase == 27)
+            {
+                Phrase(42);
+            }
+            else if (CurrentPhrase == 42)
+            {
+                Phrase(43);
+            }
+            else if (CurrentPhrase == 43)
             {
                 menuStrip1.Enabled = true;
                 isInDialog = false;
@@ -968,60 +988,63 @@ namespace GameQuest
         }
         public static string[][] Dialogs = new string[][]
         {
-            new string[] { "Итак, у меня начался отпуск, пора бы и развеяться на природе.", PlayerNick, Environment.CurrentDirectory + "\\Resources\\Sprites\\playerd.png", "phrase" }, //0
-            new string[] { "Судя по карте, поход предстоит долгий, так что надо хорошо подготовиться.", PlayerNick, Environment.CurrentDirectory + "\\Resources\\Sprites\\playerd.png", "phrase" }, //1
-            new string[] { "Мне нужно, во-первых, заехать в продуктовый магазин за едой на время похода.", PlayerNick, Environment.CurrentDirectory + "\\Resources\\Sprites\\playerd.png", "phrase" }, //2
-            new string[] { "Во-вторых, купить походное снаряжение.", PlayerNick, Environment.CurrentDirectory + "\\Resources\\Sprites\\playerd.png", "phrase" },
-            new string[] { "В-третьих, выбрать хорошую походную одежду.", PlayerNick, Environment.CurrentDirectory + "\\Resources\\Sprites\\playerd.png", "phrase" }, //4
-            new string[] { "В-четвертых, нужно купить лопату, вдруг клад придется выкапывать.", PlayerNick, Environment.CurrentDirectory + "\\Resources\\Sprites\\playerd.png", "phrase" }, //5
-            new string[] { "Каждый магазин отмечен желтой буквой S. Выезд из города отмечен желтым восклицательным знаком.", PlayerNick, Environment.CurrentDirectory + "\\Resources\\Sprites\\playerd.png", "phrase" }, //6
-            new string[] { "У меня есть машина на автопилоте. В интерфейсе справа его можно запрограммировать.", PlayerNick, Environment.CurrentDirectory + "\\Resources\\Sprites\\playerd.png", "phrase" }, //7
-            new string[] { "Как это сделать - описано в справке.", PlayerNick, Environment.CurrentDirectory + "\\Resources\\Sprites\\playerd.png", "phrase" },
-            new string[] { "Топлива у меня мало, поэтому нужно выбрать оптимальный маршрут.", PlayerNick, Environment.CurrentDirectory + "\\Resources\\Sprites\\playerd.png", "phrase" }, //9
+            new string[] { "Итак, у меня начался отпуск, пора бы и развеяться на природе.", "{player}", Environment.CurrentDirectory + "\\Resources\\Sprites\\playerd.png", "phrase" }, //0
+            new string[] { "Судя по карте, поход предстоит долгий, так что надо хорошо подготовиться.", "{player}", Environment.CurrentDirectory + "\\Resources\\Sprites\\playerd.png", "phrase" }, //1
+            new string[] { "Мне нужно, во-первых, заехать в продуктовый магазин за едой на время похода.", "{player}", Environment.CurrentDirectory + "\\Resources\\Sprites\\playerd.png", "phrase" }, //2
+            new string[] { "Во-вторых, купить походное снаряжение.", "{player}", Environment.CurrentDirectory + "\\Resources\\Sprites\\playerd.png", "phrase" },
+            new string[] { "В-третьих, выбрать хорошую походную одежду.", "{player}", Environment.CurrentDirectory + "\\Resources\\Sprites\\playerd.png", "phrase" }, //4
+            new string[] { "В-четвертых, нужно купить лопату, вдруг клад придется выкапывать.", "{player}", Environment.CurrentDirectory + "\\Resources\\Sprites\\playerd.png", "phrase" }, //5
+            new string[] { "Каждый магазин отмечен желтой буквой S. Выезд из города отмечен желтым восклицательным знаком.", "{player}", Environment.CurrentDirectory + "\\Resources\\Sprites\\playerd.png", "phrase" }, //6
+            new string[] { "У меня есть машина на автопилоте. В интерфейсе справа его можно запрограммировать.", "{player}", Environment.CurrentDirectory + "\\Resources\\Sprites\\playerd.png", "phrase" }, //7
+            new string[] { "Как это сделать - описано в справке.", "{player}", Environment.CurrentDirectory + "\\Resources\\Sprites\\playerd.png", "phrase" },
+            new string[] { "Топлива у меня мало, поэтому нужно выбрать оптимальный маршрут.", "{player}", Environment.CurrentDirectory + "\\Resources\\Sprites\\playerd.png", "phrase" }, //9
 
-            new string[] { "Ошибка компиляции. Надо бы свериться со справкой....", PlayerNick, Environment.CurrentDirectory + "\\Resources\\Sprites\\playerd.png", "phrase" }, //10
-            new string[] { "Зачем я здесь остановился?.", PlayerNick, Environment.CurrentDirectory + "\\Resources\\Sprites\\playerd.png", "phrase" }, //11
-            new string[] { "Продуктовый магазин. Сделано. Едем дальше.", PlayerNick, Environment.CurrentDirectory + "\\Resources\\Sprites\\playerd.png", "phrase" }, //12
-            new string[] { "Туристический магазин. Сделано. Едем дальше.", PlayerNick, Environment.CurrentDirectory + "\\Resources\\Sprites\\playerd.png", "phrase" }, //13
-            new string[] { "Магазин одежды. Сделано. Едем дальше.", PlayerNick, Environment.CurrentDirectory + "\\Resources\\Sprites\\playerd.png", "phrase" },
-            new string[] { "Строительный магазин. Сделано. Едем дальше.", PlayerNick, Environment.CurrentDirectory + "\\Resources\\Sprites\\playerd.png", "phrase" }, //15
-            new string[] { "Я купил еще не все из списка. Нужно вернуться.", PlayerNick, Environment.CurrentDirectory + "\\Resources\\Sprites\\playerd.png", "phrase" }, //16
+            new string[] { "Ошибка компиляции. Надо бы свериться со справкой....", "{player}", Environment.CurrentDirectory + "\\Resources\\Sprites\\playerd.png", "phrase" }, //10
+            new string[] { "Зачем я здесь остановился?.", "{player}", Environment.CurrentDirectory + "\\Resources\\Sprites\\playerd.png", "phrase" }, //11
+            new string[] { "Продуктовый магазин. Сделано. Едем дальше.", "{player}", Environment.CurrentDirectory + "\\Resources\\Sprites\\playerd.png", "phrase" }, //12
+            new string[] { "Туристический магазин. Сделано. Едем дальше.", "{player}", Environment.CurrentDirectory + "\\Resources\\Sprites\\playerd.png", "phrase" }, //13
+            new string[] { "Магазин одежды. Сделано. Едем дальше.", "{player}", Environment.CurrentDirectory + "\\Resources\\Sprites\\playerd.png", "phrase" },
+            new string[] { "Строительный магазин. Сделано. Едем дальше.", "{player}", Environment.CurrentDirectory + "\\Resources\\Sprites\\playerd.png", "phrase" }, //15
+            new string[] { "Я купил еще не все из списка. Нужно вернуться.", "{player}", Environment.CurrentDirectory + "\\Resources\\Sprites\\playerd.png", "phrase" }, //16
 
-            new string[] { "Вещи собраны, настроение хорошее, впереди приключения. Вперед!", PlayerNick, Environment.CurrentDirectory + "\\Resources\\Sprites\\playerd.png", "phrase" }, //17
+            new string[] { "Вещи собраны, настроение хорошее, впереди приключения. Вперед!", "{player}", Environment.CurrentDirectory + "\\Resources\\Sprites\\playerd.png", "phrase" }, //17
 
-            new string[] { "Люблю лес. Птички поют, солнце не жарит...", PlayerNick, Environment.CurrentDirectory + "\\Resources\\Sprites\\playerd.png", "phrase" }, //18
+            new string[] { "Люблю лес. Птички поют, солнце не жарит...", "{player}", Environment.CurrentDirectory + "\\Resources\\Sprites\\playerd.png", "phrase" }, //18
 
             new string[] { "Здравствуйте, молодой человек. Смотрела я в зелье предсказаний и знаю, что ты нам помочь можешь.", "Фиолетовая Ведьма", Environment.CurrentDirectory + "\\Resources\\Sprites\\purplewitch.png", "phrase" }, //19
             new string[] { "Делаем мы сайт ведьминский, магию в массы продвигаем.", "Зеленая Ведьма", Environment.CurrentDirectory + "\\Resources\\Sprites\\greenwitch.png", "phrase" }, //20
             new string[] { "Токма ошибки в него закрались, самим найти их у нас не получается.", "Красная Ведьма", Environment.CurrentDirectory + "\\Resources\\Sprites\\redwitch.png", "phrase" }, //21
             new string[] { "Золотом тебя одарим мы.", "Фиолетовая Ведьма", Environment.CurrentDirectory + "\\Resources\\Sprites\\purplewitch.png", "phrase" },
-            new string[] { "Окей, показывайте.", PlayerNick, Environment.CurrentDirectory + "\\Resources\\Sprites\\playerd.png", "phrase" }, //23
+            new string[] { "Окей, показывайте.", "{player}", Environment.CurrentDirectory + "\\Resources\\Sprites\\playerd.png", "phrase" }, //23
 
             new string[] { "Благодарствую тебе, путник. Прими в дар амулет на удачу и немного денег.", "Фиолетовая Ведьма", Environment.CurrentDirectory + "\\Resources\\Sprites\\purplewitch.png", "phrase" }, //24
             new string[] { "Проверьте инвентарь.", "Игра", Environment.CurrentDirectory + "\\Resources\\Sprites\\scroll.png", "phrase" }, //25
 
-            new string[] { "Солнце так печет... Я устал, присяду в тени этих деревьев.", PlayerNick, Environment.CurrentDirectory + "\\Resources\\Sprites\\playerd.png", "phrase" }, //26
-            new string[] { "Как раз решу тот кроссворд, который мне коллега посоветовал.", PlayerNick, Environment.CurrentDirectory + "\\Resources\\Sprites\\playerd.png", "phrase" }, //27
+            new string[] { "Солнце так печет... Я устал, присяду в тени этих деревьев.", "{player}", Environment.CurrentDirectory + "\\Resources\\Sprites\\playerd.png", "phrase" }, //26
+            new string[] { "Как раз решу тот кроссворд, который мне коллега посоветовал.", "{player}", Environment.CurrentDirectory + "\\Resources\\Sprites\\playerd.png", "phrase" }, //27
 
-            new string[] { "Это было несложно. А теперь в путь!", PlayerNick, Environment.CurrentDirectory + "\\Resources\\Sprites\\playerd.png", "phrase" }, //28
+            new string[] { "Это было несложно. А теперь в путь!", "{player}", Environment.CurrentDirectory + "\\Resources\\Sprites\\playerd.png", "phrase" }, //28
             
-            new string[] { "Запертая дверь... За ней точно что-то есть!", PlayerNick, Environment.CurrentDirectory + "\\Resources\\Sprites\\playerd.png", "phrase" }, //29
-            new string[] { "Четыре замка. На каждом нацарапаны символы...", PlayerNick, Environment.CurrentDirectory + "\\Resources\\Sprites\\playerd.png", "phrase" }, //30
-            new string[] { "Да это же системы счисления! Судя по всему...", PlayerNick, Environment.CurrentDirectory + "\\Resources\\Sprites\\playerd.png", "phrase" }, //31
-            new string[] { "Мне нужно перевести эти числа в десятичную систему счисления. Точно.", PlayerNick, Environment.CurrentDirectory + "\\Resources\\Sprites\\playerd.png", "phrase" }, //32
+            new string[] { "Запертая дверь... За ней точно что-то есть!", "{player}", Environment.CurrentDirectory + "\\Resources\\Sprites\\playerd.png", "phrase" }, //29
+            new string[] { "Четыре замка. На каждом нацарапаны символы...", "{player}", Environment.CurrentDirectory + "\\Resources\\Sprites\\playerd.png", "phrase" }, //30
+            new string[] { "Да это же системы счисления! Судя по всему...", "{player}", Environment.CurrentDirectory + "\\Resources\\Sprites\\playerd.png", "phrase" }, //31
+            new string[] { "Мне нужно перевести эти числа в десятичную систему счисления. Точно.", "{player}", Environment.CurrentDirectory + "\\Resources\\Sprites\\playerd.png", "phrase" }, //32
 
-            new string[] { "Проход открыт. Внутрь!", PlayerNick, Environment.CurrentDirectory + "\\Resources\\Sprites\\playerd.png", "phrase" }, //33
+            new string[] { "Проход открыт. Внутрь!", "{player}", Environment.CurrentDirectory + "\\Resources\\Sprites\\playerd.png", "phrase" }, //33
 
-            new string[] { "Сыро, темно и страшно. Клад однозначно здесь.", PlayerNick, Environment.CurrentDirectory + "\\Resources\\Sprites\\playerd.png", "phrase" }, //34
+            new string[] { "Сыро, темно и страшно. Клад однозначно здесь.", "{player}", Environment.CurrentDirectory + "\\Resources\\Sprites\\playerd.png", "phrase" }, //34
 
-            new string[] { "Сундук! И опять на кодовом замке. Посмотрим, что тут...", PlayerNick, Environment.CurrentDirectory + "\\Resources\\Sprites\\playerd.png", "phrase" }, //35
-            new string[] { "Кнопки с буквами. Нужно нажать их в правильном порядке.", PlayerNick, Environment.CurrentDirectory + "\\Resources\\Sprites\\playerd.png", "phrase" }, //36
+            new string[] { "Сундук! И опять на кодовом замке. Посмотрим, что тут...", "{player}", Environment.CurrentDirectory + "\\Resources\\Sprites\\playerd.png", "phrase" }, //35
+            new string[] { "Кнопки с буквами. Нужно нажать их в правильном порядке.", "{player}", Environment.CurrentDirectory + "\\Resources\\Sprites\\playerd.png", "phrase" }, //36
             new string[] { "В следующем задании вам необходимо найти слова.", "Игра", Environment.CurrentDirectory + "\\Resources\\Sprites\\scroll.png", "phrase" }, //37
             new string[] { "Выделяйте их от первой буквы до последней и жмите Enter. R для очищения выделения.", "Игра", Environment.CurrentDirectory + "\\Resources\\Sprites\\scroll.png", "phrase" }, //38
 
-            new string[] { "Ура! У меня получилось! Сколько тут золота! Я богат!", PlayerNick, Environment.CurrentDirectory + "\\Resources\\Sprites\\playerd.png", "phrase" }, //39
+            new string[] { "Ура! У меня получилось! Сколько тут золота! Я богат!", "{player}", Environment.CurrentDirectory + "\\Resources\\Sprites\\playerd.png", "phrase" }, //39
             new string[] { "Основной квест выполнен, вы нашли клад. Можете свободно погулять по локации.", "Игра", Environment.CurrentDirectory + "\\Resources\\Sprites\\scroll.png", "phrase" }, //40
-            new string[] { "Встаньте на знак конца уровня, когда захотите закончить игру.", "Игра", Environment.CurrentDirectory + "\\Resources\\Sprites\\scroll.png", "phrase" } //41
+            new string[] { "Встаньте на знак конца уровня, когда захотите закончить игру.", "Игра", Environment.CurrentDirectory + "\\Resources\\Sprites\\scroll.png", "phrase" }, //41
+
+            new string[] { "Если будет слишком сложно, я могу поискать ответ в интернете.", "{player}", Environment.CurrentDirectory + "\\Resources\\Sprites\\playerd.png", "phrase" }, //42
+            new string[] { "Но я за городом, здесь интернет дорогой, каждое использование будет стоить 10 монет.", "{player}", Environment.CurrentDirectory + "\\Resources\\Sprites\\playerd.png", "phrase" }, //43
         };
 
         public void Phrase(int id)
@@ -1061,9 +1084,24 @@ namespace GameQuest
 
         private void ЖурналToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            Journal.PlayerNick = PlayerNick;
             Journal j = new Journal();
             j.ShowDialog();
         }
         #endregion
+
+        private void Game_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            TitleScreen.outputDevice.Stop();
+            TitleScreen.outputDevice.Dispose();
+            TitleScreen.curAudioFile.Dispose();
+            FileInfo[] fi;
+            DirectoryInfo di = new DirectoryInfo(Environment.CurrentDirectory + "\\Resources");
+            fi = di.GetFiles("*.mp3");
+            for (int i = 0; i < fi.Length; i++)
+            {
+                try { fi[i].Delete(); } catch { }
+            }
+        }
     }
 }

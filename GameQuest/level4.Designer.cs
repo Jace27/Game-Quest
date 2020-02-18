@@ -31,6 +31,9 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NumberSystemTranslation));
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.смартфонToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // textBox1
@@ -54,6 +57,24 @@
             this.label1.TabIndex = 2;
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // menuStrip1
+            // 
+            this.menuStrip1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(184)))), ((int)(((byte)(135)))), ((int)(((byte)(81)))));
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.смартфонToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(900, 24);
+            this.menuStrip1.TabIndex = 3;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // смартфонToolStripMenuItem
+            // 
+            this.смартфонToolStripMenuItem.Name = "смартфонToolStripMenuItem";
+            this.смартфонToolStripMenuItem.Size = new System.Drawing.Size(77, 20);
+            this.смартфонToolStripMenuItem.Text = "Смартфон";
+            this.смартфонToolStripMenuItem.Click += new System.EventHandler(this.СмартфонToolStripMenuItem_Click);
+            // 
             // NumberSystemTranslation
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -64,7 +85,9 @@
             this.ClientSize = new System.Drawing.Size(900, 600);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.menuStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "NumberSystemTranslation";
@@ -74,6 +97,8 @@
             this.Text = "Система счисления";
             this.Deactivate += new System.EventHandler(this.NumberSystemTranslation_Deactivate);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.NumberSystemTranslation_Paint);
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -83,5 +108,7 @@
 
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem смартфонToolStripMenuItem;
     }
 }

@@ -14,6 +14,7 @@ namespace GameQuest
             Width = par.Width;
             Height = par.Height;
             Location = par.Location;
+            Player = Game.Player;
         }
 
         public static int NumberTranslation = 0;
@@ -143,6 +144,7 @@ namespace GameQuest
                         {
                             label1.Text += G.Next(0, 2);  //Генерация числа 0 или 1
                         }
+                        question = label1.Text;
                         label1.Text += "(2)";
                         hint = Environment.CurrentDirectory + "\\Resources\\Число2.png";
                         CreateGraphics().DrawImage(new Bitmap(Environment.CurrentDirectory + "\\Resources\\Sprites\\btn.png"), 100, Height - 150, Width - 200, 150);
@@ -156,6 +158,7 @@ namespace GameQuest
                         {
                             label1.Text += G.Next(0, 8);  //Генерация числа от 0 до 8
                         }
+                        question = label1.Text;
                         label1.Text += "(8)";
                         hint = Environment.CurrentDirectory + "\\Resources\\Число8.png";
                         CreateGraphics().DrawImage(new Bitmap(Environment.CurrentDirectory + "\\Resources\\Sprites\\btn.png"), 100, Height - 150, Width - 200, 150);
@@ -207,6 +210,7 @@ namespace GameQuest
                                     }
                             }
                         }
+                        question = label1.Text;
                         label1.Text += "(16)";
                         hint = Environment.CurrentDirectory + "\\Resources\\Число16.png";
                         CreateGraphics().DrawImage(new Bitmap(Environment.CurrentDirectory + "\\Resources\\Sprites\\btn.png"), 100, Height - 150, Width - 200, 150);
@@ -240,6 +244,7 @@ namespace GameQuest
                     Perevod += Convert.ToInt32(Podshet[i]);
                 }
                 Otvet = Perevod.ToString();
+                answer = Otvet;
             }
             catch
             {
@@ -262,6 +267,16 @@ namespace GameQuest
             e.Graphics.DrawImage(new Bitmap(Environment.CurrentDirectory + "\\Resources\\Sprites\\btn.png"), 100, Height - 150, Width - 200, 150);
             if (hint != "")
                 e.Graphics.DrawImage(new Bitmap(hint), 150, Height - 100, Width - 300, 50);
+        }
+
+        public Player Player { get; set; }
+        public string question { get; set; }
+        public string answer { get; set; }
+        private void СмартфонToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Hint hint = new Hint(this);
+            if (hint.ShowDialog() == DialogResult.OK)
+                Player.Inventory.Money -= 10;
         }
     }
 }

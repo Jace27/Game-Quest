@@ -106,7 +106,7 @@ namespace GameQuest
                                         if (Fuel < 1)   //Если топливо закончилось
                                         {
                                             GameField.DrawScreen("Топливо закончилось, вы проиграли.\nУровень начнется заново...", Color.FromArgb(10, 10, 10), Color.AntiqueWhite);
-                                            Player.Location = new InGameLocation(new Point(4, 9), GameField.BlockSize);
+                                            Player.Location = new InGameLocation(new Point(4, 9));
                                             GameField.Draw();
                                             Fuel = 100;
                                             label1.Text = String.Format("Осталось топлива: {0:0}", Fuel);

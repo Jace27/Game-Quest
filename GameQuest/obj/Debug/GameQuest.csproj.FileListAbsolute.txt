@@ -460,3 +460,4 @@ H:\GameQuest\GameQuest\obj\Debug\GameQuest.ReferenceForLevel1.resources
 H:\GameQuest\GameQuest\obj\Debug\GameQuest.Journal.resources
 H:\GameQuest\GameQuest\obj\Debug\GameQuest.Crossword.resources
 H:\GameQuest\GameQuest\obj\Debug\GameQuest.GuessingWords.resources
+A:\Программирование\C#\GameQuest\GameQuest\obj\Debug\GameQuest.Hint.resources

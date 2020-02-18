@@ -213,7 +213,7 @@ namespace GameQuest
                     //инициализируем объект по ID
                     Field[x, y].Object = new GameObject(obj[1]);
                     //положение объекта
-                    Field[x, y].Object.Location = new InGameLocation(new Point(x, y), BlockSize);
+                    Field[x, y].Object.Location = new InGameLocation(new Point(x, y));
                 }
 
                 //заносим кол-во объектов
@@ -304,13 +304,13 @@ namespace GameQuest
         }
         public static Dialog Dialog;                      //объект диалога персонажей
 
-        private Mutex Mutex = new Mutex();
+        //private Mutex Mutex = new Mutex();
 
         public void Draw()
         {
-            Mutex.WaitOne();
-            lock (new object())
-            {
+            //Mutex.WaitOne();
+            //lock (new object())
+            //{
                 Image buffer = new Bitmap(Size.Width * BlockSize.Width, Size.Height * BlockSize.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
                 using (Graphics gr = Graphics.FromImage(buffer))
                 {
@@ -351,8 +351,8 @@ namespace GameQuest
                 if (Dialog.Current.Message != null && Dialog.Current.Font != null && Dialog.Current.Image != null && Dialog.BlockStart != null)
                     TextRenderer.DrawText(Graphics, Dialog.Current.Message, Dialog.Current.Font, Dialog.Current.Rectangle, Color.Black, Dialog.Flags);
                 buffer.Dispose();
-            }
-            Mutex.ReleaseMutex();
+            //}
+            //Mutex.ReleaseMutex();
         }
 
         public void DrawScreen(string ScreenText, Color TextColor, Color BackColor)
@@ -436,7 +436,7 @@ namespace GameQuest
         public void Dispose()
         {
             Graphics.Dispose();
-            Mutex.Dispose();
+            //Mutex.Dispose();
         }
     }
     public class Block
@@ -633,7 +633,7 @@ namespace GameQuest
         {
             lock (new object())
             {
-                newP = new InGameLocation(new Point(0, 0), GameField.BlockSize);
+                newP = new InGameLocation(new Point(0, 0));
                 oldP = Location;
                 dir = direction;
                 frame = 0;
@@ -646,7 +646,7 @@ namespace GameQuest
                     if (GameField.Field[newP.BL.X, newP.BL.Y].Passable)
                     {
                         double[] coords = new double[] { Location.PX.X, Location.PX.Y };
-                        newPT = new InGameLocation(newP.BL, GameField.BlockSize);
+                        newPT = new InGameLocation(newP.BL);
                         while (frame < MoveAnimationFrames)
                         {
                             DateTime beginning = DateTime.Now;
@@ -658,22 +658,11 @@ namespace GameQuest
                                                     newPT.PX.Y / GameField.BlockSize.Height].Passable &&
                                     newPT.PX.X > newP.PX.X)
                                 {
-                                    Location = new InGameLocation() 
-                                    { 
-                                        BL = newPT.BL, PX = newPT.PX, 
-                                        scaleX = GameField.BlockSize.Width, 
-                                        scaleY = GameField.BlockSize.Height 
-                                    };
+                                    Location = new InGameLocation(newPT.PX, "px");
                                 }
                                 if (Location.PX.X < newP.PX.X)
                                 {
-                                    Location = new InGameLocation()
-                                    {
-                                        BL = newP.BL,
-                                        PX = newP.PX,
-                                        scaleX = GameField.BlockSize.Width,
-                                        scaleY = GameField.BlockSize.Height
-                                    };
+                                    Location = new InGameLocation(newPT.PX, "px");
                                 }
 
                                 if (frame % 10 == 0)
@@ -688,23 +677,11 @@ namespace GameQuest
                                                     newPT.PX.Y / GameField.BlockSize.Height].Passable &&
                                     newPT.PX.Y > newP.PX.Y)
                                 {
-                                    Location = new InGameLocation()
-                                    {
-                                        BL = newPT.BL,
-                                        PX = newPT.PX,
-                                        scaleX = GameField.BlockSize.Width,
-                                        scaleY = GameField.BlockSize.Height
-                                    };
+                                    Location = new InGameLocation(newPT.PX, "px");
                                 }
                                 if (Location.PX.Y < newP.PX.Y)
                                 {
-                                    Location = new InGameLocation()
-                                    {
-                                        BL = newP.BL,
-                                        PX = newP.PX,
-                                        scaleX = GameField.BlockSize.Width,
-                                        scaleY = GameField.BlockSize.Height
-                                    };
+                                    Location = new InGameLocation(newPT.PX, "px");
                                 }
 
                                 if (frame % 10 == 0)
@@ -719,23 +696,11 @@ namespace GameQuest
                                                     newPT.PX.Y / GameField.BlockSize.Height].Passable &&
                                     newPT.PX.X < newP.PX.X)
                                 {
-                                    Location = new InGameLocation()
-                                    {
-                                        BL = newPT.BL,
-                                        PX = newPT.PX,
-                                        scaleX = GameField.BlockSize.Width,
-                                        scaleY = GameField.BlockSize.Height
-                                    };
+                                    Location = new InGameLocation(newPT.PX, "px");
                                 }
                                 if (Location.PX.X > newP.PX.X)
                                 {
-                                    Location = new InGameLocation()
-                                    {
-                                        BL = newP.BL,
-                                        PX = newP.PX,
-                                        scaleX = GameField.BlockSize.Width,
-                                        scaleY = GameField.BlockSize.Height
-                                    };
+                                    Location = new InGameLocation(newPT.PX, "px");
                                 }
 
                                 if (frame % 10 == 0)
@@ -750,23 +715,11 @@ namespace GameQuest
                                                     newPT.PX.Y / GameField.BlockSize.Height].Passable &&
                                     newPT.PX.Y < newP.PX.Y)
                                 {
-                                    Location = new InGameLocation()
-                                    {
-                                        BL = newPT.BL,
-                                        PX = newPT.PX,
-                                        scaleX = GameField.BlockSize.Width,
-                                        scaleY = GameField.BlockSize.Height
-                                    };
+                                    Location = new InGameLocation(newPT.PX, "px");
                                 }
                                 if (Location.PX.Y > newP.PX.Y)
                                 {
-                                    Location = new InGameLocation()
-                                    {
-                                        BL = newP.BL,
-                                        PX = newP.PX,
-                                        scaleX = GameField.BlockSize.Width,
-                                        scaleY = GameField.BlockSize.Height
-                                    };
+                                    Location = new InGameLocation(newPT.PX, "px");
                                 }
 
                                 if (frame % 10 == 0)
@@ -786,7 +739,7 @@ namespace GameQuest
                                 Thread.Sleep((int)Math.Round(MoveAnimationTime / MoveAnimationFrames - (ending - beginning).TotalMilliseconds, 0));
                             frame++;
                         }
-                        Location = new InGameLocation(newP.BL, GameField.BlockSize);
+                        Location = new InGameLocation(newP.BL);
                         if (!GameField.IsFogged)
                         {
                             GameField.DrawBlock(oldP.BL, true);
@@ -832,41 +785,29 @@ namespace GameQuest
 
     public class InGameLocation
     {
-        public InGameLocation(Point location, Size BlockSize)
+        public InGameLocation(Point location)
         {
-            BL = location;
-            PX = new Point(location.X * BlockSize.Width, location.Y * BlockSize.Height);
-            scaleX = BlockSize.Width;
-            scaleY = BlockSize.Height;
-            onChangeLocation += InGameLocation_onChangeLocation;
+            _bl = location;
+            _px = new Point(location.X * GameField.BlockSize.Width, location.Y * GameField.BlockSize.Height);
+        }
+        public InGameLocation(Point location, string type)
+        {
+            if (type == "bl")
+            {
+                _bl = location;
+                _px = new Point(location.X * GameField.BlockSize.Width, location.Y * GameField.BlockSize.Height);
+            }
+            else
+            {
+                _px = location;
+                _bl = new Point(location.X / GameField.BlockSize.Width, location.Y / GameField.BlockSize.Height);
+            }
         }
         public InGameLocation()
         {
-            BL = new Point(0, 0);
-            PX = new Point(0, 0);
-            scaleX = 30;
-            scaleY = 30;
+            _bl = new Point(0, 0);
+            _px = new Point(0, 0);
         }
-
-        private bool isHandler = false;
-
-        public int scaleX { get; set; } = 1;
-        public int scaleY { get; set; } = 1;
-        private void InGameLocation_onChangeLocation(string sender)
-        {
-            if (PX.X % scaleX == 0 && PX.Y % scaleY == 0)
-            {
-                isHandler = true;
-                if (sender == "px")
-                    BL = new Point(PX.X / scaleX, PX.Y / scaleY);
-                if (sender == "bl")
-                    PX = new Point(BL.X * scaleX, BL.Y * scaleY);
-                isHandler = false;
-            }
-        }
-
-        private delegate void EventHandler(string sender);
-        private event EventHandler onChangeLocation;
 
         private Point _bl;
         public Point BL
@@ -875,8 +816,7 @@ namespace GameQuest
             set
             {
                 _bl = value;
-                if (!isHandler)
-                    try { onChangeLocation("bl"); } catch { }
+                _px = new Point(BL.X * GameField.BlockSize.Width, BL.Y * GameField.BlockSize.Height);
             }
         }
 
@@ -887,8 +827,7 @@ namespace GameQuest
             set
             {
                 _px = value;
-                if (!isHandler)
-                    try { onChangeLocation("px"); } catch { }
+                _bl = new Point(PX.X / GameField.BlockSize.Width, PX.Y / GameField.BlockSize.Height);
             }
         }
     }
@@ -1031,7 +970,7 @@ namespace GameQuest
             using (Graphics gr = Graphics.FromImage(Current.Image))
             {
                 Current.Rectangle = new Rectangle(0, 0, 0, 0);
-                BlockStart = new InGameLocation(new Point(0, 0), GameField.BlockSize);
+                BlockStart = new InGameLocation(new Point(0, 0));
                 BlockStart.PX = new Point(0, (GameField.Size.Height - SpeakerSize.Height + 2 - 3) * GameField.BlockSize.Height);
                 if (Type == "phrase")
                 {

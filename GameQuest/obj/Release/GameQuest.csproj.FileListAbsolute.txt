@@ -134,3 +134,4 @@ A:\Программирование\C#\GameQuest\GameQuest\obj\Release\GameQuest
 A:\Программирование\C#\GameQuest\GameQuest\obj\Release\GameQuest.exe
 A:\Программирование\C#\GameQuest\GameQuest\obj\Release\GameQuest.pdb
 A:\Программирование\C#\GameQuest\GameQuest\obj\Release\GameQuest.csprojAssemblyReference.cache
+A:\Программирование\C#\GameQuest\GameQuest\obj\Release\GameQuest.Hint.resources

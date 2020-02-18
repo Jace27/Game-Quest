@@ -134,7 +134,7 @@ namespace GameQuest
             {
                 Close = new Button();
                 Close.Name = "Close";
-                Close.Text = "🞫";
+                Close.Text = "X";
                 Close.Font = new Font("Arial", 18);
                 Close.ForeColor = Color.Black;
                 Close.BackColor = Color.FromArgb(194, 184, 145);

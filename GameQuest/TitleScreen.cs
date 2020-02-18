@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using NAudio.Wave;
 using System.Threading.Tasks;
+using System.IO;
 using System.IO.Compression;
 
 namespace GameQuest
@@ -21,6 +22,13 @@ namespace GameQuest
             {
                 string zipPath = Environment.CurrentDirectory + "\\Resources\\Music.zip";
                 string extractPath = Environment.CurrentDirectory + "\\Resources";
+                FileInfo[] fi;
+                DirectoryInfo di = new DirectoryInfo(Environment.CurrentDirectory + "\\Resources");
+                fi = di.GetFiles("*.mp3");
+                for (int i = 0; i < fi.Length; i++)
+                {
+                    try { fi[i].Delete(); } catch { }
+                }
                 try { ZipFile.ExtractToDirectory(zipPath, extractPath); } catch { }
                 if (outputDevice == null)
                 {
@@ -80,8 +88,6 @@ namespace GameQuest
             intro.Dispose();
             Game.Show();
             this.Hide();
-            if (audioInitiate)
-                outputDevice.Stop();
         }
 
         private void LoadGame_Click(object sender, EventArgs e)
@@ -94,8 +100,6 @@ namespace GameQuest
             {
                 Game.Show();
                 this.Hide();
-                if (audioInitiate)
-                    outputDevice.Stop();
             }
         }
 

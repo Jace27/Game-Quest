@@ -24,6 +24,11 @@ namespace GameQuest
             if (af != null)
                 OldVolume = Audio.Volume;
             TrackBar.Value = OldSize;
+            if (OldVolume < 0)
+            {
+                OldVolume = 1;
+                Audio.Volume = 1;
+            }
             trackBar1.Value = Convert.ToInt32(OldVolume * 100);
             label1.Text = String.Format("Разрешение: {0:0}x{1:0}", TrackBar.Value, TrackBar.Value / 1.5);
             label2.Text = String.Format("Громкость музыки: {0:0}%", trackBar1.Value);

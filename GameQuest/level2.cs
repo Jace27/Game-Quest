@@ -29,11 +29,12 @@ namespace GameQuest
         {
             if (textBox1.Text.Length != 0)  //Если textBox не пустой
             {
+                bool isfinded = false;
                 for (int i = 0; i < NomeraStrok.Count(); i++)
                 {
                     try
                     {
-                        if (Convert.ToInt32(textBox1.Text.Substring(7)) == NomeraStrok[i])   //Если ответ совпал
+                        if (!isfinded && Convert.ToInt32(textBox1.Text.Substring(7)) == NomeraStrok[i])   //Если ответ совпал
                         {
                             switch (NomeraStrok[i])
                             {
@@ -56,7 +57,7 @@ namespace GameQuest
                             }
                             Array.Resize(ref NomeraStrok, NomeraStrok.Count() - 1); //Уменьшение массива
                             MessageBox.Show("Да, здесь была ошибка");
-                            return;
+                            isfinded = true;
                         }
                     }
                     catch
@@ -74,7 +75,8 @@ namespace GameQuest
                     this.Dispose(); //Удаление формы
                     return;
                 }
-                MessageBox.Show("Здесь все в порядке");
+                if (!isfinded)
+                    MessageBox.Show("Здесь все в порядке");
             }
         }
 

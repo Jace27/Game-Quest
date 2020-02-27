@@ -15,6 +15,30 @@ namespace GameQuest
             Height = par.Height;
             Location = par.Location;
             Player = Game.Player;
+
+            /*#region позиционирование текстбокса и лейбла
+            double[] labelLocationPercent = new double[] { label1.Location.X / (900.0 / 100.0) - 1, label1.Location.Y / (600.0 / 100.0) - 1 };
+            double[] textboxLocationPercent = new double[] { textBox1.Location.X / (900.0 / 100.0) - 1, textBox1.Location.Y / (600.0 / 100.0) - 1 };
+            double[] labelSizePercent = new double[] { label1.Size.Width / (900.0 / 100.0), label1.Size.Height / (600.0 / 100.0) };
+            double[] textboxSizePercent = new double[] { textBox1.Size.Width / (900.0 / 100.0), textBox1.Size.Height / (600.0 / 100.0) };
+
+            label1.Location = new Point(
+                (int)Math.Round(labelLocationPercent[0] * (Width / 100.0), 0),
+                (int)Math.Round(labelLocationPercent[1] * (Height / 100.0), 0)
+            );
+            textBox1.Location = new Point(
+                (int)Math.Round(textboxLocationPercent[0] * (Width / 100.0), 0),
+                (int)Math.Round(textboxLocationPercent[1] * (Height / 100.0), 0)
+            );
+            label1.Size = new Size(
+                (int)Math.Round(labelSizePercent[0] * (Width / 100.0), 0),
+                (int)Math.Round(labelSizePercent[1] * (Height / 100.0), 0)
+            );
+            textBox1.Size = new Size(
+                (int)Math.Round(textboxSizePercent[0] * (Width / 100.0), 0),
+                (int)Math.Round(textboxSizePercent[1] * (Height / 100.0), 0)
+            );
+            #endregion*/
         }
 
         public static int NumberTranslation = 0;

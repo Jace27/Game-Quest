@@ -111,9 +111,35 @@ namespace GameQuest
 
         private void Timer1_Tick(object sender, EventArgs e)
         {
-            if (audioInitiate)
-                if (curAudioFile.CurrentTime > curAudioFile.TotalTime - new TimeSpan(0, 0, 2))
-                    curAudioFile.CurrentTime = new TimeSpan(0, 0, 0);
+            try
+            {
+                if (audioInitiate)
+                    if (curAudioFile.CurrentTime > curAudioFile.TotalTime - new TimeSpan(0, 0, 2))
+                        curAudioFile.CurrentTime = new TimeSpan(0, 0, 0);
+            }
+            catch
+            {
+                float vol = curAudioFile.Volume;
+                outputDevice.Stop();
+                FileInfo fi1 = new FileInfo(audioFiles[0]);
+                if (!fi1.Exists)
+                {
+                    string zipPath = Environment.CurrentDirectory + "\\Resources\\Music.zip";
+                    string extractPath = Environment.CurrentDirectory + "\\Resources";
+                    FileInfo[] fi;
+                    DirectoryInfo di = new DirectoryInfo(Environment.CurrentDirectory + "\\Resources");
+                    fi = di.GetFiles("*.mp3");
+                    for (int i = 0; i < fi.Length; i++)
+                    {
+                        try { fi[i].Delete(); } catch { }
+                    }
+                    try { ZipFile.ExtractToDirectory(zipPath, extractPath); } catch { }
+                }
+                curAudioFile = new AudioFileReader(audioFiles[0]);
+                outputDevice.Init(curAudioFile);
+                outputDevice.Play();
+                curAudioFile.Volume = vol;
+            }
         }
 
         //ПЕРЕТАСКИВАНИЕ ФОРМЫ

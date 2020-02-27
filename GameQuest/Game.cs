@@ -382,7 +382,7 @@ namespace GameQuest
                 (Player.Location.BL.X == 24 && Player.Location.BL.Y == 1) ||
                 (Player.Location.BL.X == 25 && Player.Location.BL.Y == 1))
             {
-                if (GuessingWords.GuessingWordStart == 0)
+                if (GuessingWords.GuessingWordStart == 0 && !NextMap5)
                 {
                     Phrase(35);
                 }
@@ -476,6 +476,7 @@ namespace GameQuest
                 if (dr == DialogResult.Yes) сохранитьИгруToolStripMenuItem.PerformClick();
                 if (dr == DialogResult.Cancel) return;
             }
+            SwitchMusic(0);
             Par.Show();
             this.Close();
         }

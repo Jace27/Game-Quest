@@ -38,9 +38,10 @@
             // 
             // textBox1
             // 
-            this.textBox1.Font = new System.Drawing.Font("Book Antiqua", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.textBox1.Font = new System.Drawing.Font("Book Antiqua", 20F);
             this.textBox1.Location = new System.Drawing.Point(360, 346);
             this.textBox1.MaxLength = 5;
+            this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(175, 47);
             this.textBox1.TabIndex = 0;

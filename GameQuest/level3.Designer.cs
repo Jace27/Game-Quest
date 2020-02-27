@@ -77,6 +77,9 @@
             this.menuStrip1.Size = new System.Drawing.Size(748, 24);
             this.menuStrip1.TabIndex = 2;
             this.menuStrip1.Text = "menuStrip1";
+            this.menuStrip1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MenuStrip1_MouseDown);
+            this.menuStrip1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MenuStrip1_MouseMove);
+            this.menuStrip1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.MenuStrip1_MouseUp);
             // 
             // подсказкаToolStripMenuItem
             // 
@@ -102,6 +105,7 @@
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Crossword";
+            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Game_MouseMove);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();

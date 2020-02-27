@@ -130,15 +130,21 @@ namespace GameQuest
 
         private void Close_Click(object sender, EventArgs e)
         {
-            if (comboBox1.Text.IndexOf(" -> " + NumberSystemTranslation.answer) == -1)
+            if (Crossword != null)
             {
                 DialogResult = DialogResult.Cancel;
             }
-            else
+            else if (NumberSystemTranslation != null)
             {
-                DialogResult = DialogResult.OK;
+                if (comboBox1.Text.IndexOf(" -> " + NumberSystemTranslation.answer) == -1)
+                {
+                    DialogResult = DialogResult.Cancel;
+                }
+                else
+                {
+                    DialogResult = DialogResult.OK;
+                }
             }
-            Close();
         }
     }
 }

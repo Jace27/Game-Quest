@@ -805,8 +805,26 @@ namespace GameQuest
         }
         public InGameLocation()
         {
-            _bl = new Point(0, 0);
             _px = new Point(0, 0);
+            _bl = new Point(0, 0);
+            isLoadGame = true;
+        }
+
+        private bool isLoadGame = false;
+
+        private Point _px;
+        public Point PX
+        {
+            get { return _px; }
+            set
+            {
+                if (!isLoadGame)
+                {
+                    _px = value;
+                    _bl = new Point(PX.X / GameField.BlockSize.Width, PX.Y / GameField.BlockSize.Height);
+                }
+                isLoadGame = false;
+            }
         }
 
         private Point _bl;
@@ -817,17 +835,6 @@ namespace GameQuest
             {
                 _bl = value;
                 _px = new Point(BL.X * GameField.BlockSize.Width, BL.Y * GameField.BlockSize.Height);
-            }
-        }
-
-        private Point _px;
-        public Point PX
-        {
-            get { return _px; }
-            set
-            {
-                _px = value;
-                _bl = new Point(PX.X / GameField.BlockSize.Width, PX.Y / GameField.BlockSize.Height);
             }
         }
     }

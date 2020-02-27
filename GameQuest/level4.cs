@@ -11,9 +11,9 @@ namespace GameQuest
             InitializeComponent();
             RandomNumber();
             Parent = par;
-            Width = par.Width;
-            Height = par.Height;
-            Location = par.Location;
+            //Width = par.Width;
+            //Height = par.Height;
+            //Location = par.Location;
             Player = Game.Player;
 
             /*#region позиционирование текстбокса и лейбла
@@ -302,5 +302,49 @@ namespace GameQuest
             if (hint.ShowDialog() == DialogResult.OK)
                 Player.Inventory.Money -= 10;
         }
+
+        #region ПЕРЕТАСКИВАНИЕ ФОРМЫ
+        private Point mouseOffset;
+        private bool isMouseDown = false;
+
+        private void MenuStrip1_MouseDown(object sender, MouseEventArgs e)
+        {
+            int xOffset;
+            int yOffset;
+            if (e.Button == MouseButtons.Left)
+            {
+                xOffset = -e.X - SystemInformation.FrameBorderSize.Width;
+                yOffset = -e.Y - SystemInformation.FrameBorderSize.Height;
+
+                mouseOffset = new Point(xOffset, yOffset);
+                isMouseDown = true;
+            }
+            else isMouseDown = false;
+        }
+
+        private void MenuStrip1_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (isMouseDown)
+            {
+                Point mousePos = Control.MousePosition;
+                mousePos.Offset(mouseOffset.X, mouseOffset.Y);
+                Location = mousePos;
+                if (Location.X < 0) Location = new Point(1, Location.Y);
+                if (Location.Y < 0) Location = new Point(Location.X, 1);
+            }
+        }
+
+        private void MenuStrip1_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left) isMouseDown = false;
+        }
+
+        private void Game_MouseMove(object sender, MouseEventArgs e)
+        {
+            //label1.Text = (-e.Y - SystemInformation.FrameBorderSize.Height).ToString();
+            if (e.Y + SystemInformation.FrameBorderSize.Height > menuStrip1.Height || e.Y + SystemInformation.FrameBorderSize.Height < 0)
+                isMouseDown = false;
+        }
+        #endregion
     }
 }

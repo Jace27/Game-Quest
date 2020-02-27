@@ -120,8 +120,19 @@ namespace GameQuest
 
         public static int CrosswordStart = 0;
 
-        string[] crossword = new string[] { "инверсия управления", "процессор", "программирование", "алгоритм", "конкатенация", "мышь",
-                                            "класс", "язык программирования","компилятор", "шина"};
+        string[] crossword = new string[] 
+        { 
+            "инверсия управления",      // 6
+            "процессор",                // 9
+            "программирование",         // 1
+            "алгоритм",                 // 10
+            "конкатенация",             // 8
+            "мышь",                     // 3
+            "класс",                    // 4
+            "язык программирования",    // 5
+            "компилятор",               // 7
+            "шина"                      // 2
+        };
         int prav = 0;
 
         private void VvodBlock(int number)
@@ -332,6 +343,39 @@ namespace GameQuest
             {
                 if (otvet == crossword[i])
                 {
+                    switch (i)
+                    {
+                        case 0:
+                            Remove(6);
+                            break;
+                        case 1:
+                            Remove(9);
+                            break;
+                        case 2:
+                            Remove(1);
+                            break;
+                        case 3:
+                            Remove(10);
+                            break;
+                        case 4:
+                            Remove(8);
+                            break;
+                        case 5:
+                            Remove(3);
+                            break;
+                        case 6:
+                            Remove(4);
+                            break;
+                        case 7:
+                            Remove(5);
+                            break;
+                        case 8:
+                            Remove(7);
+                            break;
+                        case 9:
+                            Remove(2);
+                            break;
+                    }
                     prav++;
                     MessageBox.Show("Вы отгадали слово");
                     VvodBlock(i);
@@ -486,5 +530,49 @@ namespace GameQuest
                 return;
             }
         }
+
+        #region ПЕРЕТАСКИВАНИЕ ФОРМЫ
+        private Point mouseOffset;
+        private bool isMouseDown = false;
+
+        private void MenuStrip1_MouseDown(object sender, MouseEventArgs e)
+        {
+            int xOffset;
+            int yOffset;
+            if (e.Button == MouseButtons.Left)
+            {
+                xOffset = -e.X - SystemInformation.FrameBorderSize.Width;
+                yOffset = -e.Y - SystemInformation.FrameBorderSize.Height;
+
+                mouseOffset = new Point(xOffset, yOffset);
+                isMouseDown = true;
+            }
+            else isMouseDown = false;
+        }
+
+        private void MenuStrip1_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (isMouseDown)
+            {
+                Point mousePos = Control.MousePosition;
+                mousePos.Offset(mouseOffset.X, mouseOffset.Y);
+                Location = mousePos;
+                if (Location.X < 0) Location = new Point(1, Location.Y);
+                if (Location.Y < 0) Location = new Point(Location.X, 1);
+            }
+        }
+
+        private void MenuStrip1_MouseUp(object sender, MouseEventArgs e)
+        {
+
+        }
+
+        private void Game_MouseMove(object sender, MouseEventArgs e)
+        {
+            //label1.Text = (-e.Y - SystemInformation.FrameBorderSize.Height).ToString();
+            if (e.Y + SystemInformation.FrameBorderSize.Height > menuStrip1.Height || e.Y + SystemInformation.FrameBorderSize.Height < 0)
+                isMouseDown = false;
+        }
+        #endregion
     }
 }

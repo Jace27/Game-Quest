@@ -37,6 +37,8 @@ namespace GameQuest
             равнинаToolStripMenuItem.Visible = false;
             подножиеГорToolStripMenuItem.Visible = false;
             подземельяToolStripMenuItem.Visible = false;
+
+            Location = new Point((Screen.PrimaryScreen.Bounds.Width - ClientSize.Width) / 2, (Screen.PrimaryScreen.Bounds.Height - ClientSize.Height) / 2);
         }
 
         TitleScreen Par; //родитель - главный экран. также нужен для проигрывания амбиента
@@ -85,6 +87,7 @@ namespace GameQuest
                 GameField.Graphics = CreateGraphics(); //почему-то требуется пересоздавать объект графики
                 GameField.Draw();
                 this.ClientSize = new Size(GameField.BlockSize.Width * 30, GameField.BlockSize.Height * 20 + menuStrip1.Height);
+                Location = new Point((Screen.PrimaryScreen.Bounds.Width - ClientSize.Width) / 2, (Screen.PrimaryScreen.Bounds.Height - ClientSize.Height) / 2);
                 panel1.Width = GameField.BlockSize.Width * 5;
                 label1.Location = new Point((panel1.Width - label1.Width) / 2, label1.Location.Y);
                 button1.Location = new Point((panel1.Width - button1.Width) / 2, button1.Location.Y);
@@ -486,6 +489,7 @@ namespace GameQuest
             Settings GameSettings = new Settings(TitleScreen.curAudioFile);
             GameSettings.ShowDialog();
             ClientSize = new Size(GameField.BlockSize.Width * 30, GameField.BlockSize.Height * 20 + 24);
+            Location = new Point((Screen.PrimaryScreen.Bounds.Width - ClientSize.Width) / 2, (Screen.PrimaryScreen.Bounds.Height - ClientSize.Height) / 2);
             panel1.Width = GameField.BlockSize.Width * 5;
             textBox1.Width = GameField.BlockSize.Width * 5 - 2;
             textBox1.Height = GameField.BlockSize.Height * 20 - 92;
@@ -715,6 +719,7 @@ namespace GameQuest
                 Player.GameField = GameField;
                 GameField.Player = Save.Player;
                 GameField.Player.GameField = GameField;
+                Player.Location = new InGameLocation(Save.Player.Location.BL, "bl");
                 Player.onStepUpItem += Player_onStepUpItem;
                 GameField.Draw();
                 SuccessfulLoad = true;

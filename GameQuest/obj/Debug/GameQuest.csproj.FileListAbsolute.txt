@@ -1,4 +1,3 @@
-A:\Программирование\C#\GameQuest\GameQuest\obj\Debug\GameQuest.csprojAssemblyReference.cache
 A:\Программирование\C#\GameQuest\GameQuest\obj\Debug\GameQuest.csproj.GenerateResource.cache
 H:\GameQuest\GameQuest\obj\Debug\GameQuest.csprojAssemblyReference.cache
 H:\GameQuest\GameQuest\obj\Debug\GameQuest.csproj.GenerateResource.cache
